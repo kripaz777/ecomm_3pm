@@ -35,3 +35,9 @@ class BrandView(BaseView):
         br_id = Brand.objects.get(slug = slug).id
         self.views['brand_products'] = Product.objects.filter(brand_id = br_id)
         return render(request, 'brand.html', self.views)
+
+
+class DetailView(BaseView):
+    def get(self,request,slug):
+        self.views['detail_products'] = Product.objects.filter(slug = slug)
+        return render(request, 'product-detail.html', self.views)

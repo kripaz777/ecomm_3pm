@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import View
 from .models import *
 
@@ -44,3 +44,18 @@ class DetailView(BaseView):
         cat_id = Product.objects.get(slug = slug).category_id
         self.views['related_products'] = Product.objects.filter(category_id = cat_id)
         return render(request, 'product-detail.html', self.views)
+
+
+class SearchView(BaseView):
+    def get(self,request):
+        self.views
+        # if request.method == 'GET':
+        #     query = request.GET['search']
+        query = request.GET.get('search')
+        if query != '':
+            self.views['search_products'] = Product.objects.filter(name__icontains = query)
+        elif query == ' ':
+            return redirect('/')
+        else:
+            return redirect('/')
+        return render(request,'search.html',self.views)

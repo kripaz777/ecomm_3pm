@@ -22,6 +22,9 @@
                     <div class="col-lg-6">
                         <form method = "POST">
                             {% csrf_token %}
+                            {% for message in messages %}
+                            <font color = "red"><center>{{message}}</center></font>
+                            {% endfor %}
                         <div class="register-form">
                             <div class="row">
                                 <div class="col-md-6">
@@ -53,6 +56,7 @@
                                 </div>
                             </div>
                         </div>
+                        </form>
                     </div>
 
 

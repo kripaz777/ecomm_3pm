@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect
 from django.views.generic import View
+from django.contrib import messages
+from django.contrib.auth.models import User
 from .models import *
 
 # Create your views here.
@@ -59,3 +61,33 @@ class SearchView(BaseView):
         else:
             return redirect('/')
         return render(request,'search.html',self.views)
+
+
+def signup(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        first_name = request.POST['fname']
+        last_name = request.POST['lname']
+        password = request.POST['password']
+        cpassword = request.POST['cpassword']
+        if password == cpassword:
+            if User.objects.filter(username = username).exists():
+                messages.error(request,"This username is already used!")
+                return redirect('/signup')
+            elif User.objects.filter(email = email).exists():
+                messages.error(request, "This email is already exists!")
+                return redirect('/signup')
+            else:
+                User.objects.create_user(
+                    username = username,
+                    email = email,
+                    first_name = first_name,
+                    last_name = last_name,
+                    password= password
+                ).save()
+        else:
+            messages.error(request, "The passwords do not match!")
+            return redirect('/signup')
+
+    return render(request,'signup.html')

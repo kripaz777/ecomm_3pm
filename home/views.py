@@ -91,3 +91,10 @@ def signup(request):
             return redirect('/signup')
 
     return render(request,'signup.html')
+
+
+class CartView(BaseView):
+    def get(self,request):
+        username = request.user.username
+        self.views['cart_products'] = Cart.objects.filter(name = username, checkout = False)
+        return render(request,'cart.html',self.views)

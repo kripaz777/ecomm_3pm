@@ -90,5 +90,6 @@ class Cart(models.Model):
     total = models.IntegerField()
     slug = models.SlugField(max_length=500)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    checkout = models.BooleanField(default=False)
     def __str__(self):
         return self.name

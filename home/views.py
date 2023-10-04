@@ -112,7 +112,7 @@ def cart(request,slug):
             price = original_price
         total = price * qty
         Cart.objects.filter(name = username,checkout = False,slug = slug).update(
-            total = total,qty = qty
+            total = total,quantity = qty
         )
     else:
         price = original_price
@@ -125,4 +125,32 @@ def cart(request,slug):
             slug = slug,
             product = Product.objects.filter(slug = slug)[0]
         )
+    return redirect('/cart')
+
+
+def reduce_quantity(request,slug):
+    username = request.user.username
+    original_price = Product.objects.get(slug = slug).price
+    discounted_price = Product.objects.get(slug = slug).discounted_price
+    if Cart.objects.filter(slug = slug).exists():
+        qty = Cart.objects.get(slug=slug).quantity
+        if qty >1:
+            qty = qty - 1
+            if discounted_price > 0:
+                price = original_price
+            else:
+                price = original_price
+            total = price * qty
+            Cart.objects.filter(name = username,checkout = False,slug = slug).update(
+                total = total,quantity = qty
+            )
+        else:
+            messages.error(request, "The quantity is already 1")
+            return redirect('/cart')
+        return redirect('/cart')
+
+
+def delete_cart(request,slug):
+    username = request.user.username
+    Cart.objects.filter(name = username, slug = slug,checkout = False).delete()
     return redirect('/cart')

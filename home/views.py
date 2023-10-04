@@ -98,3 +98,31 @@ class CartView(BaseView):
         username = request.user.username
         self.views['cart_products'] = Cart.objects.filter(name = username, checkout = False)
         return render(request,'cart.html',self.views)
+
+def cart(request,slug):
+    username = request.user.username
+    original_price = Product.objects.get(slug = slug).price
+    discounted_price = Product.objects.get(slug = slug).discounted_price
+    if Cart.objects.filter(slug = slug).exists():
+        qty = Cart.objects.get(slug=slug).quantity
+        qty = qty + 1
+        if discounted_price > 0:
+            price = original_price
+        else:
+            price = original_price
+        total = price * qty
+        Cart.objects.filter(name = username,checkout = False,slug = slug).update(
+            total = total,qty = qty
+        )
+    else:
+        price = original_price
+        total = original_price
+        Cart.objects.create(
+            name = username,
+            price = price,
+            quantity = 1,
+            total = total,
+            slug = slug,
+            product = Product.objects.filter(slug = slug)[0]
+        )
+    return redirect('/cart')

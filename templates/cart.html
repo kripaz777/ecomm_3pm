@@ -32,7 +32,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="align-middle">
-                                    {% for cart in cart_produts %}
+                                    {% for cart in cart_products %}
                                         <tr>
                                             <td>
                                                 <div class="img">
@@ -40,7 +40,7 @@
                                                     <p>{{cart.product.name}}</p>
                                                 </div>
                                             </td>
-                                            <td>$99</td>
+                                            <td>${{cart.price}}</td>
                                             <td>
                                                 <div class="qty">
                                                     <button class="btn-minus"><i class="fa fa-minus"></i></button>

@@ -45,6 +45,7 @@ class DetailView(BaseView):
         self.views['detail_products'] = Product.objects.filter(slug = slug)
         cat_id = Product.objects.get(slug = slug).category_id
         self.views['related_products'] = Product.objects.filter(category_id = cat_id)
+        self.views['product_reviews'] = ProductReviews.objects.filter(slug = slug)
         return render(request, 'product-detail.html', self.views)
 
 

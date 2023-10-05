@@ -78,6 +78,7 @@ class ProductReviews(models.Model):
     date = models.DateField(auto_now_add=True)
     star = models.IntegerField()
     review = models.TextField()
+    slug = models.SlugField(max_length=200)
     image = models.ImageField(upload_to='media',null = True)
 
     def __str__(self):

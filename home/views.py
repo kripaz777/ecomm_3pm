@@ -95,8 +95,14 @@ def signup(request):
 
 class CartView(BaseView):
     def get(self,request):
+        total_price = 0
         username = request.user.username
         self.views['cart_products'] = Cart.objects.filter(name = username, checkout = False)
+        for i in Cart.objects.filter(name = username, checkout = False):
+            total_price = total_price + i.total
+        self.views['total_price'] = total_price
+        self.views['delivery_charge'] = 50
+        self.views['all_total_price'] = total_price + self.views['delivery_charge']
         return render(request,'cart.html',self.views)
 
 def cart(request,slug):

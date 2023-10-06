@@ -117,11 +117,9 @@
                                         <div class="reviews-submitted">
                                             <div class="reviewer">{{rev.username}} - <span>{{rev.date}}</span></div>
                                             <div class="ratting">
+                                                {% for i in 1|ljust:rev.star %}
                                                 <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+                                                {% endfor %}
                                             </div>
                                             <p>
                                                 {{rev.review}}

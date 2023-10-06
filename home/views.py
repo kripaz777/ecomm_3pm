@@ -161,3 +161,18 @@ def delete_cart(request,slug):
     username = request.user.username
     Cart.objects.filter(name = username, slug = slug,checkout = False).delete()
     return redirect('/cart')
+
+def submit_review(request,slug):
+    if request.method == 'POST':
+        username = request.user.username
+        email = request.user.email
+        star = request.POST['star']
+        review = request.POST['review']
+        ProductReviews.objects.create(
+            username = username,
+            email = email,
+            star = star,
+            review = review,
+            slug = slug
+        ).save()
+        return redirect(f'/detail/{slug}')

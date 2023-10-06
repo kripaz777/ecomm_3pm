@@ -109,8 +109,7 @@
                                     <div id="specification" class="container tab-pane fade">
                                         <h4>Product specification</h4>
                                         <ul>
-                                            {{detail.specification}}
-                                        </ul>
+                                            {{detail.specification}}</ul>
                                     </div>
 
                                     <div id="reviews" class="container tab-pane fade">
@@ -131,30 +130,30 @@
                                         {% endfor %}
 
                                         {% if user.is_authenticated %}
+                                        <form method = "POST" action = "/submit_review/{{detail.slug}}">
+                                            {% csrf_token %}
                                         <div class="reviews-submit">
                                             <h4>Give your Review:</h4>
+
                                             <div class="ratting">
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
+                                                <select name="star" id="star">
+                                                  <option value="5">5</option>
+                                                  <option value="4">4</option>
+                                                  <option value="3">3</option>
+                                                  <option value="2">2</option>
+                                                    <option value="1">1</option>
+                                                </select>
                                             </div>
                                             <div class="row form">
-                                                <div class="col-sm-6">
-                                                    <input type="text" placeholder="Name">
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <input type="email" placeholder="Email">
+                                                <div class="col-sm-12">
+                                                    <textarea name = "review" placeholder="Review"></textarea>
                                                 </div>
                                                 <div class="col-sm-12">
-                                                    <textarea placeholder="Review"></textarea>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <button>Submit</button>
+                                                    <button type = "submit">Submit</button>
                                                 </div>
                                             </div>
                                         </div>
+                                        </form>
                                         {% endif %}
 
                                     </div>

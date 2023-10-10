@@ -10,5 +10,6 @@ router.register(r'products', ProductViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('product_filter',ProductListView.as_view(),name = 'product_filter'),
+    path('products/<int:pk>', ProductDetail.as_view(), name='products'),
 
 ]

@@ -106,6 +106,9 @@ class CartView(BaseView):
         self.views['all_total_price'] = total_price + self.views['delivery_charge']
         return render(request,'cart.html',self.views)
 
+
+from django.contrib.auth.decorators import login_required
+@login_required
 def cart(request,slug):
     username = request.user.username
     original_price = Product.objects.get(slug = slug).price

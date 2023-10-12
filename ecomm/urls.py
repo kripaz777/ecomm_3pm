@@ -19,9 +19,9 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("my_admin/", admin.site.urls),
     path("", include('home.urls')),
-    path("account/",include('django.contrib.auth.urls')),
+    path("accounts/",include('django.contrib.auth.urls')),
     path("api/",include('home.api_urls')),
 ]
 if settings.DEBUG:
